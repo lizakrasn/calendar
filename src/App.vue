@@ -1,7 +1,11 @@
 <template>
   <div id="app">
     <Month :month="new Date().getMonth()" :year="new Date().getFullYear()"/>
-    <Days :currentMonth="new Date().getMonth()" :currentYear="new Date().getFullYear()"/>
+    <Days
+      :currentDate="new Date().getDate()"
+      :currentMonth="new Date().getMonth()"
+      :currentYear="new Date().getFullYear()"
+    />
   </div>
 </template>
 
@@ -18,13 +22,15 @@ export default {
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="sass">
+body
+  font-family: Avenir, Helvetica, Arial, sans-serif
+  color: #2c3e50
+
+// html,
+// body,
+// p
+//   margin: 0
+//   padding: 0
+
 </style>

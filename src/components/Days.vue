@@ -1,20 +1,26 @@
 <template>
   <div class="days">
-    <table>
-      <thead>
-        <tr>
-          <th>Mon</th>
-          <th>Tue</th>
-          <th>Wed</th>
-          <th>Thu</th>
-          <th>Fri</th>
-          <th>Sat</th>
-          <th>Sun</th>
+    <table class="days__table">
+      <thead class="days__head">
+        <tr class="days__weeks-name">
+          <th class="days__week-name">Mon</th>
+          <th class="days__week-name">Tue</th>
+          <th class="days__week-name">Wed</th>
+          <th class="days__week-name">Thu</th>
+          <th class="days__week-name">Fri</th>
+          <th class="days__week-name">Sat</th>
+          <th class="days__week-name">Sun</th>
         </tr>
       </thead>
-      <tbody>
-        <tr v-for="(week, i) in getWeeks.length" :key="i">
-          <td v-for="(day, j) in getWeeks[week-1]" :key="j">{{day}}</td>
+      <tbody class="days__body">
+        <tr class="days__items" v-for="(week, i) in getWeeks.length" :key="i">
+          <td
+            class="days__item"
+            v-for="(day, j) in getWeeks[week-1]" :key="j"
+            v-bind:class="{'is-active': day === currentDate}"
+          >
+            {{day}}
+          </td>
         </tr>
       </tbody>
     </table>
@@ -26,7 +32,8 @@ export default {
   name: 'Days',
   props: {
     currentYear: Number,
-    currentMonth: Number
+    currentMonth: Number,
+    currentDate: Number
   },
   computed: {
     getWeeks() {
@@ -40,11 +47,11 @@ export default {
         return;
       } else if (firstDay === 0) {
         for(let i = 0; i <= 6; i++) {
-          days.push(0);
+          days.push('');
         }
       } else {
         for(let i = 0; i < firstDay - 1; i++) {
-          days.push(0);
+          days.push('');
         }
       }
 
@@ -56,7 +63,7 @@ export default {
       //add '0' after end month to array
       const number = 7 - (days.length % 7)
       for(let i = 0; i < number; i++) {
-        days.push(0);
+        days.push('');
       }
 
       //split days to weeks
@@ -67,6 +74,8 @@ export default {
         weeks.push(week);
       }
 
+      console.log(this.currentDate)
+
       return weeks;
     }
   }
@@ -74,5 +83,23 @@ export default {
 </script>
 
 <style lang="sass">
+.days
+  &__table
+    margin: 0 auto
+  &__week-name,
+  &__item
+    padding: 20px
+    text-align: center
+    text-transform: uppercase
+    border: 1px solid tomato
 
+  &__item
+    font-size: 20px
+    cursor: pointer
+    transition: background-color 300ms
+    &:hover
+      background-color: rgba(255, 99, 71, 0.3)
+
+    &.is-active
+      background-color: rgba(255, 99, 71, 0.7)
 </style>
